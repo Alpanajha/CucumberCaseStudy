@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -101,15 +102,29 @@ public class StepDef {
 	@When("^enter security question$")
 	public void securityquestion() {
 		Select s=new Select(driver.findElement(By.name("securityQuestion")));
-		s.selectByIndex(2);
+		s.selectByIndex(1);
 	}
 	@When("^enter answer as \"([^\"]*)\"$")
 	public void enteranswer(String ans) {
 		driver.findElement(By.name("answer")).sendKeys(ans);
 	}
 	@Then("^user registered sucessfully$")
-	public void regisersucessfully() {
+	public void registersucessfully() {
 		System.out.println("User register sucessfully");
 	}
+	@When("^user enters product$")
+	public void usersearch(DataTable dt) {
+		List<String> prod=dt.asList(String.class);
+		driver.findElement(By.name("products")).sendKeys(prod.get(0));
+	}
+	@And("^user finds product$")
+	public void userfindsproduct() {
+		driver.findElement(By.xpath("/html/body/div[1]/form/input")).click();
+	}
+	@Then("^user add product to cart$")
+	public void Addtocart() {
+		driver.findElement(By.xpath("/html/body/section/div/div/div[2]/div/div/div/div[2]/center/a")).click();
+	}
+	
 	
 }
